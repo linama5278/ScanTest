@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>盤點</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="barcode/barcode.js"></script>
+    <script type="text/javascript">
+        var sound = new Audio("barcode/barcode.wav");
+
+        $(document).ready(function() {
+
+            barcode.config.start = 0.1;
+            barcode.config.end = 0.9;
+            barcode.config.video = '#barcodevideo';
+            barcode.config.canvas = '#barcodecanvas';
+            barcode.config.canvasg = '#barcodecanvasg';
+            barcode.setHandler(function(barcode) {
+                $('#result').text(barcode);
+            });
+            barcode.init();
+
+            $('#result').bind('DOMSubtreeModified', function(e) {
+                sound.play();	
+            });
+        });
+    </script>
+    <style>
+        #barcodevideo, #barcodecanvas, #barcodecanvasg {
+            height: 400px;
+        }
+        #barcodecanvasg {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+        #barcode {
+            position: relative;
+        }
+        #barcodecanvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div data-role="page">    
+        <div data-role="header">
+            <h1>盤點</h1>
+        </div>
+    
+        <div role="main" class="ui-content">
+            <div id="barcode">
+                <video id="barcodevideo" autoplay></video>
+                <canvas id="barcodecanvasg" ></canvas>
+            </div>
+            <canvas id="barcodecanvas" ></canvas>
+            <label for="result">編號：</label>
+            <input type="text" name="result" id="result" value="">
+            <button class="ui-shadow ui-btn ui-corner-all">送出</button>
+        </div>
+    
+        <div data-role="footer">
+            <h4>&copy; 2018 zochan</h4>
+        </div>
+    </div>
+</body>
+</html>
